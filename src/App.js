@@ -1,17 +1,22 @@
+import { render } from "@testing-library/react";
 import React from "react";
+import axios from "axios";
 
-function Food({ favourite }) {
-return <h1>i like {favourite}</h1>;
+class App extends React.Component {
+  state = {
+    isLoading: true,
+    movies: []
+  };
+  getMoives = async () => {
+    const movies = await axios.get("https://yts.mx/api/v2/list_movies.json");
+  }
+  componentDidMount() {
+    this.getMoives();
+  }
+  render() {
+    const { isLoading } = this.state;
+    return <div>{isLoading ? "Loading..." : "We are ready"}</div>;
+  }
+  
 }
-
-function App() {
-  return <div>
-    <h1>Hello!</h1>
-    <Food favourite="kimchi" />
-    <Food favourite="ramen" />
-    <Food favourite="samgiopsal" />
-    <Food favourite="chukumi" />
-    </div>
-}
-
 export default App;
