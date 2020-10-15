@@ -1,22 +1,20 @@
-import { render } from "@testing-library/react";
 import React from "react";
-import axios from "axios";
+import { HashRouter, Route } from "react-router-dom";
+import Home from "./routes/Home"
+import About from "./routes/About";
+import Detail from "./routes/Detail";
+import "./App.css";
+import Navigation from "./components/Navigation";
 
-class App extends React.Component {
-  state = {
-    isLoading: true,
-    movies: []
-  };
-  getMoives = async () => {
-    const movies = await axios.get("https://yts.mx/api/v2/list_movies.json");
-  }
-  componentDidMount() {
-    this.getMoives();
-  }
-  render() {
-    const { isLoading } = this.state;
-    return <div>{isLoading ? "Loading..." : "We are ready"}</div>;
-  }
-  
+function App() {
+  return (
+  <HashRouter>
+    <Navigation/>
+    <Route path="/" exact={true} component={Home}/>
+    <Route path="/about" component={About}/>
+    <Route path="/movie/:id" component={Detail}/>
+  </HashRouter>
+  );
 }
+
 export default App;
